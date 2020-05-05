@@ -37,6 +37,12 @@ public class DelayedRabbitMQConfig {
         return new CustomExchange(DELAYED_EXCHANGE_NAME, "x-delayed-message", true, false, args);
     }
 
+    /**
+     * 绑定 延迟队列 和 延迟交换机 与 routingkey
+     * @param queue
+     * @param customExchange
+     * @return
+     */
     @Bean
     public Binding bindingNotify(@Qualifier("delayedQueue") Queue queue,
                                  @Qualifier("customExchange") CustomExchange customExchange) {
