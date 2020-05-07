@@ -1,10 +1,8 @@
 package com.jack.springbootrabbitmq.controller;
 
-import com.alibaba.fastjson.JSON;
 import com.alibaba.fastjson.JSONObject;
 import com.jack.springbootrabbitmq.entity.CancelOrder;
 import lombok.extern.slf4j.Slf4j;
-import lombok.val;
 import org.springframework.amqp.rabbit.core.RabbitTemplate;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.web.bind.annotation.*;
@@ -25,8 +23,7 @@ public class TestController {
     private RabbitTemplate rabbitTemplate;
 
     /**
-     *
-     * @param msg 消息
+     * @param msg       消息
      * @param delayTime 延迟时间
      * @return
      */
@@ -39,11 +36,12 @@ public class TestController {
         order.setCreateTime(new Date());
 
         rabbitTemplate.convertAndSend(DELAYED_EXCHANGE_NAME, DELAYED_ROUTING_KEY, JSONObject.toJSONString(order), a -> {
-            a.getMessageProperties().setDelay(delayTime*1000);
+            a.getMessageProperties().setDelay(delayTime * 1000);
             return a;
         });
         return "ok";
     }
+
     @GetMapping("/test")
     public String testRabbitMQ1() {
         return "ok";
